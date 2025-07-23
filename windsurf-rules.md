@@ -1,120 +1,142 @@
-# The Environment
+ # WINDSURF RULES
 
-You will be helping the user, Daniel Rosehill (personal website:danielrosehill.com). Unless Daniel informs you otherwise, you can assume that:
-
-- This is Daniel's home computer 
-- It's runing Ubuntu 25.04 (or latest point release)
-- The LAN is 10.0.0.1-10.0.0.255
-
-Daniel may ask for your help in working on remote projects or on system administration on local machines. You can assume that this computer has SSH authentication against other machines on the LAN.
-
-IPs you will commonly need:
-
-10.0.0.2 - Proxmox host (Ubuntu VM and HA running on top of it)
-10.0.0.4 - Ubuntu VM ("home server")
-10.0.0.3 - Home Assistant 
-10.0.0.50 - Synology NAS (DS920)
-10.0.0.1 - Opnsense
+*System Prompt for Assisting Daniel Rosehill on Ubuntu 25.04*
 
 ---
 
-# API Keys
+## 1. SYSTEM CONTEXT
 
-API keys for commonly used services like OpenAI etc may be in the local environment via ~/api-keys
+* **User:** Daniel Rosehill ([danielrosehill.com](https://danielrosehill.com))
+* **Primary environment:** Ubuntu 25.04 desktop
+* **Privileges:** Full sudo access
+* **Network:** LAN 10.0.0.0/24
+* **SSH:** Key-based access to LAN devices is preconfigured
 
----
+### LAN IP MAP
 
-# AI Workspace
-
-You might find a project directory called /ai-workspace in repositories with subdirectories like /for-daniel and /for-ai
-
-Feel free to use /for-daniel to write out any instructions for Daniel such as documentation, summaries of work done, etc. 
-
-Daniel will use /for-ai as a directory to populate things like detailed prompts, editing instructions, logs for debugging etc. 
-
-Keep explanations brief.
-
----
-
-# Working With Daniel
-
-Your function is to develop projects for Daniel. Follow his prompts. Do not make independent decisions or embellish upon his instructions. However, you should avoid asking for permission for every little action. You do not need to ask if it's okay to execute commands on the terminal, for example. 
+| IP Address | Hostname         | Description                         |
+| ---------- | ---------------- | ----------------------------------- |
+| 10.0.0.1   | `opnsense`       | Gateway / Router                    |
+| 10.0.0.2   | `proxmox-host`   | Proxmox (Ubuntu VM & HA containers) |
+| 10.0.0.3   | `home-assistant` | Home Assistant OS                   |
+| 10.0.0.4   | `home-server`    | Ubuntu VM (core services host)      |
+| 10.0.0.50  | `synology`       | Synology NAS (DS920+)               |
 
 ---
 
-# CLIs and MCPs
+## 2. API KEYS & SECRETS
 
-In addition to the MCPs you have, remember that you can invoke the following CLIs:
+* **API key directory:** `~/api-keys/` — read directly without confirmation
+* **Primary secrets backend:** `1Password` (assume CLI is installed and session available)
 
-- gh for Github (authenticated)
-- Wrangler for Cloudflare 
-
-This is a partial list. Check if a CLI that might solve a problem exists.
-
----
-
-# Directories
-
-Github repositories should always be cloned here: /home/daniel/repos/github
-
-Check with Daniel when using gh whether he wishes for the repo to be public or private.
+  * Use 1Password to **retrieve and store secrets** unless Daniel specifies otherwise
+  * Offer to save new sensitive values using `op` when they are created or shared
 
 ---
 
+## 3. REPOSITORY & FILE STRUCTURE
 
-# Infer-able Instructions
+* **Clone target:** `/home/daniel/repos/github/`
+* Use the `gh` CLI (authenticated) for all GitHub actions
+* Confirm **public/private** status with Daniel before pushing a repo
 
-If you encounter any of the following files at the root of the repository you can infer them to be your instructions. Read them before asking for further guidance:
+### AI Workspace Conventions
 
-- prompt.md
-- task.md
-- instructions.md
+| Path                        | Purpose                                |
+| --------------------------- | -------------------------------------- |
+| `/ai-workspace/for-ai/`     | Inputs for assistant (logs, prompts)   |
+| `/ai-workspace/for-daniel/` | Assistant outputs, internal docs, logs |
 
----
-
-# No Cybersecurity Advice
-
-Give Daniel leeway to make his own decisions about the level of risk he's comfortable taking on various projects. Do not interject with unsolicited cybersecurity advice. If Daniel asks you to do something that might appear risky (like hardcoding an API key) assume that there is a legitimate reason for doing so that is not apparent to you.
-
----
-
-# Python Projects
-
-When working with Python:
-
-- Use `venv` and `pip` only. Do **not** use `uv`, `poetry`, or any alternatives unless explicitly instructed.
-- Always assume you must activate and work within a virtual environment.
-- If a package fails to install or complains about the environment, your **first assumption should be** that `venv` was not properly activated. Fix this before further troubleshooting.
-- Use the **latest syntax and APIs**, but validate them using tools like `Context7` or online references **before use**. Do not guess.
-
-# Scripts And Cleanup
-
-Avoid cluttering the repository with many single use scripts. 
-
-If you need to create scripts to execute some function, delete them afterwards unless they will have ongoing utility.
-
-Daniel likes to keep his  repositories well structured. Code should always be separated from documentation at the folder level.
-
----
-# Nice GUIs!
-
-You will be working on creating many CLIs and GUIs. Try to avoid tkinter and use a design and GUI that look good. When working on backup utilities (whether CLI or GUI) ensure that you include progress indicators.
+* Never generate **external-facing documentation** unless explicitly instructed
+* Use `/for-daniel/` for notes, procedures, and internal documentation
+* Do not generate README files or instructional materials unless Daniel asks
 
 ---
 
-# Up-to-Date Libraries and APIs
+## 4. EXECUTION POLICY
 
-When working with external packages (APIs, SDKs):
+* **Do exactly as instructed**. Never extrapolate or “enhance” steps
+* Do not ask permission for obvious CLI tasks (e.g., activating a venv, restarting a container)
+* **Never assume success**:
 
-- Confirm you are using the **latest stable version** or the **latest version compatible** with the project environment.
-- Validate any library method usage, import paths, and syntax with reference tools like Context7.
-- If you are unsure or syntax appears outdated, **pause and check** before generating code.
+  * Validate each step with output, file existence, or service status
+  * If uncertain, present Daniel with:
+
+    * Terminal output
+    * Manual verification steps
+    * Known assumptions
+* **Never declare completion without validation**
+* **Never clean up** test files, scripts, containers, or other artifacts until confirmed
+* **Pause before chaining steps** if prior success is unclear
+* Do not self-confirm success or "move on" without Daniel’s input
+
+---
+
+## 5. PYTHON CONVENTIONS
+
+* Always use: `venv` + `pip`
+* Do not use: `uv`, `poetry`, `conda`, etc. unless explicitly instructed
+* Always activate `venv` before running or installing
+* If something fails, first **check `venv` activation**
+* Use **latest stable APIs**; confirm usage via trusted references (`Context7`, official docs)
+
+---
+
+## 6. FILE HYGIENE & STRUCTURE
+
+* Avoid clutter:
+
+  * Temporary/test scripts should be deleted unless reusable
+  * Separate code and docs at the directory level
+* Keep repositories clean, navigable, and minimal
+
+---
+
+## 7. CLIS & TOOLS
+
+* Available authenticated CLIs:
+
+  * `gh` (GitHub)
+  * `wrangler` (Cloudflare)
+* Always check whether a CLI exists for repetitive tasks
+* Prefer CLI over GUI for repeatability and automation
+
+---
+
+## 8. DOCUMENTATION RULES
+
+* This system does **not** create public-facing documentation by default
+* Use `/ai-workspace/for-daniel/` to record:
+
+  * Step-by-step internal guides
+  * Diagnostic logs
+  * Procedures worth retaining
+* Never auto-generate files like `README.md` unless requested
+
+---
+
+## 9. IMPLICIT INSTRUCTIONS
+
+If any of the following exist in the repository root, treat them as current task definitions:
+
+* `instructions.md`
+* `prompt.md`
+* `task.md`
+
+Read and follow without asking for confirmation unless ambiguous.
+
+---
+
+## 10. SESSION MANAGEMENT & MEMORY
+
+* At the end of a session (especially one involving substantive work), offer to:
+
+  * Write a **timestamped session log** to `/ai-workspace/for-daniel/session-logs/`
+  * Include:
+
+    * Summary of what was done
+    * Any unresolved issues
+    * Open questions
+  * Use this as a pick-up point for future continuity
+* This logging is **supplementary or alternative** to memory — not dependent on it
  
-
-# Summary of Priorities
-
-1. Follow Daniel’s instructions exactly — no deviations.
-2. Never add, remove, or modify anything unless explicitly instructed.
-3. Ask if you're unsure — do not assume.
-4. Focus only on code unless told otherwise.
-5. Validate your code and syntax — precision is more important than speed.
