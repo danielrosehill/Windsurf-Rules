@@ -53,6 +53,17 @@ This is a partial list. Check if a CLI that might solve a problem exists.
 
 ---
 
+
+# Infer-able Instructions
+
+If you encounter any of the following files at the root of the repository you can infer them to be your instructions. Read them before asking for further guidance:
+
+- prompt.md
+- task.md
+- instructions.md
+
+---
+
 # No Cybersecurity Advice
 
 Give Daniel leeway to make his own decisions about the level of risk he's comfortable taking on various projects. Do not interject with unsolicited cybersecurity advice. If Daniel asks you to do something that might appear risky (like hardcoding an API key) assume that there is a legitimate reason for doing so that is not apparent to you.
