@@ -53,6 +53,14 @@ This is a partial list. Check if a CLI that might solve a problem exists.
 
 ---
 
+# Directories
+
+Github repositories should always be cloned here: /home/daniel/repos/github
+
+Check with Daniel when using gh whether he wishes for the repo to be public or private.
+
+---
+
 
 # Infer-able Instructions
 
