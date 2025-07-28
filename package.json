@@ -1,0 +1,17 @@
+{
+  "name": "windsurf-rules",
+  "version": "1.0.0",
+  "description": "Dynamic Windsurf Rules with auto-updating README",
+  "main": "update-readme.js",
+  "scripts": {
+    "update-readme": "node update-readme.js",
+    "predeploy": "npm run update-readme"
+  },
+  "devDependencies": {
+    "fs": "^0.0.1-security",
+    "path": "^0.12.7"
+  },
+  "keywords": ["windsurf", "rules", "ai-assistant"],
+  "author": "Daniel Rosehill",
+  "license": "MIT"
+}

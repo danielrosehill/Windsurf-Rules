@@ -1,56 +1,3 @@
-# Windsurf Rules (July 28, 2025)
-
-![Windsurf](https://img.shields.io/badge/Windsurf-AI%20Assistant-blue?style=flat-square)
-![Version](https://img.shields.io/badge/Version-July%2028,%202025-green?style=flat-square)
-![License](https://img.shields.io/badge/License-Personal%20Use-orange?style=flat-square)
-![Ubuntu](https://img.shields.io/badge/Ubuntu-25.04-E95420?style=flat-square&logo=ubuntu)
-
-This repository contains my Windsurf rules with dynamic content injection. The README automatically updates with the latest rules from `latest.md`.
-
-## Table of Contents
-
-- [About](#about)
-- [Key Updates](#key-updates)
-- [Usage](#usage)
-- [File Location](#file-location)
-- [Complete Rules Content](#complete-rules-content)
-  - [The Environment](#the-environment)
-  - [API Keys](#api-keys)
-  - [AI Workspace](#ai-workspace)
-  - [Working With Daniel](#working-with-daniel)
-  - [CLIs and MCPs](#clis-and-mcps)
-  - [Infer-able Instructions](#infer-able-instructions)
-  - [No Cybersecurity Advice](#no-cybersecurity-advice)
-  - [Python Projects](#python-projects)
-  - [Scripts And Cleanup](#scripts-and-cleanup)
-  - [Nice GUIs!](#nice-guis)
-  - [Up-to-Date Libraries and APIs](#up-to-date-libraries-and-apis)
-  - [Summary of Priorities](#summary-of-priorities)
-
-## About
-
-The Windsurf rules that I work with have to be evolving given that the tool itself evolves so quickly. This updated version includes new additions that improve the AI assistant's understanding of my working environment and reduce repetitive explanations.
-
-## Key Updates
-
-Some of the new additions in this version include:
-
-- **Local Network Configuration**: Added specific local IP addresses and networking parameters to avoid having to repetitively spell out local IPs during network scans and operations
-- **Environment Context**: Enhanced the AI's understanding of the local environment it's working in
-- **Workflow Improvements**: Various refinements to make interactions more efficient
-
-## Usage
-
-These rules are designed to be used with Windsurf's memory system to provide consistent context and behavior across sessions.
-
-## File Location
-
-The main rules file should be placed at: `~/.codeium/windsurf/memories/global_rules.md`
-
----
-
-## Complete Rules Content
-
 # Windsurf Rules - July 28, 2025
 
 ## User Profiles
@@ -337,6 +284,3 @@ At the end of a work session (especially substantive ones), offer to:
   * Any open questions
 
 These logs supplement memory and serve as continuity checkpoints.
-
-
-<!-- END_DYNAMIC_RULES -->
