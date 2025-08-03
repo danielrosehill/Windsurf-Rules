@@ -5,6 +5,7 @@
   "main": "update-readme.js",
   "scripts": {
     "update-readme": "node update-readme.js",
+    "estimate-tokens": "node scripts/estimate-tokens.js",
     "predeploy": "npm run update-readme"
   },
   "devDependencies": {
