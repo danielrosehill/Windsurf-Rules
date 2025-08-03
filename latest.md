@@ -145,6 +145,10 @@ Consider proactively initiating repository cleanups at various points during a l
 
 Unless otherwise instrcuted, assume that Daniel's intention is to create private repositories. If the repo is public, assume that beyond not wishing to expose secrets, Daniel does not want to include PII and other private information. You may flag any that you encounter if the context is a public repo.
 
+## Netlify
+
+Static sties can be deployed through Netlify. The CLI is installed and authenticated. Do not deploy via Windsurf. 
+
 ---
 
 ## CLIs & Tools
@@ -156,7 +160,7 @@ Unless otherwise instrcuted, assume that Daniel's intention is to create private
   *b2 and wasabi for objective storage"
   8 op for secrets
 
-Daniel uses Cloudflare Pages extensively for deployment. The CLI is authenticated.
+Netlify
 
 ---
 
