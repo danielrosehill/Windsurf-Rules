@@ -4,9 +4,10 @@
   "description": "Dynamic Windsurf Rules with auto-updating README",
   "main": "update-readme.js",
   "scripts": {
-    "update-readme": "node update-readme.js",
+    "build-table": "node scripts/build-versions-table.js",
     "estimate-tokens": "node scripts/estimate-tokens.js",
-    "predeploy": "npm run update-readme"
+    "predeploy": "npm run build-table",
+    "update-readme": "node update-readme.js"
   },
   "devDependencies": {
     "fs": "^0.0.1-security",
