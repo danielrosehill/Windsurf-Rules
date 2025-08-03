@@ -1,0 +1,150 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { readFileSync } from 'fs';
+import { join } from 'path';
+
+// Read the changelog file
+const changelogPath = join(process.cwd(), '..', 'CHANGELOG.md');
+const changelogContent = readFileSync(changelogPath, 'utf-8');
+
+// Parse changelog sections
+const sections = changelogContent.split(/^## /gm).slice(1).map(section => {
+  const lines = section.split('\n');
+  const titleLine = lines[0];
+  const content = lines.slice(1).join('\n');
+  
+  // Extract version and date
+  const versionMatch = titleLine.match(/\[(.+?)\](.+)?/);
+  const version = versionMatch ? versionMatch[1] : titleLine;
+  const date = versionMatch && versionMatch[2] ? versionMatch[2].replace(/^\s*-\s*/, '') : '';
+  
+  // Parse subsections (Added, Changed, etc.)
+  const subsections = content.split(/^### /gm).slice(1).map(subsection => {
+    const subLines = subsection.split('\n');
+    const subTitle = subLines[0];
+    const subContent = subLines.slice(1).join('\n').trim();
+    
+    // Parse list items
+    const items = subContent.split(/^- /gm).slice(1).map(item => item.trim());
+    
+    return {
+      title: subTitle,
+      items
+    };
+  });
+  
+  return {
+    version,
+    date,
+    subsections
+  };
+});
+---
+
+<Layout title="Windsurf Rules Changelog">
+  <div class="px-4 sm:px-0">
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Changelog</h1>
+      <p class="mt-2 text-lg text-gray-600 dark:text-gray-400">
+        Track the evolution of Daniel's Windsurf AI assistant rules and configuration.
+      </p>
+    </div>
+
+    <div class="space-y-8">
+      {sections.map((section, index) => (
+        <div class="bg-white dark:bg-gray-800 shadow rounded-lg overflow-hidden">
+          <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+            <div class="flex items-center justify-between">
+              <div>
+                <h2 class="text-xl font-semibold text-gray-900 dark:text-white">
+                  Version {section.version}
+                </h2>
+                {section.date && (
+                  <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                    {section.date}
+                  </p>
+                )}
+              </div>
+              {index === 0 && (
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+                  Latest
+                </span>
+              )}
+            </div>
+          </div>
+          
+          <div class="px-6 py-6">
+            <div class="space-y-6">
+              {section.subsections.map((subsection) => (
+                <div>
+                  <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-3 flex items-center">
+                    {subsection.title === 'Added' && (
+                      <svg class="mr-2 h-5 w-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                      </svg>
+                    )}
+                    {subsection.title === 'Changed' && (
+                      <svg class="mr-2 h-5 w-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                      </svg>
+                    )}
+                    {subsection.title === 'Enhanced' && (
+                      <svg class="mr-2 h-5 w-5 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                      </svg>
+                    )}
+                    {!['Added', 'Changed', 'Enhanced'].includes(subsection.title) && (
+                      <svg class="mr-2 h-5 w-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    )}
+                    {subsection.title}
+                  </h3>
+                  
+                  <ul class="space-y-2">
+                    {subsection.items.map((item) => (
+                      <li class="flex items-start">
+                        <span class="flex-shrink-0 h-1.5 w-1.5 bg-gray-400 dark:bg-gray-500 rounded-full mt-2 mr-3"></span>
+                        <span class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
+                          {item.split('**').map((part, i) => 
+                            i % 2 === 1 ? (
+                              <strong class="font-semibold text-gray-900 dark:text-white">{part}</strong>
+                            ) : (
+                              part
+                            )
+                          )}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-8 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
+      <div class="flex">
+        <div class="flex-shrink-0">
+          <svg class="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+          </svg>
+        </div>
+        <div class="ml-3">
+          <h3 class="text-sm font-medium text-gray-900 dark:text-white">
+            About This Changelog
+          </h3>
+          <div class="mt-2 text-sm text-gray-600 dark:text-gray-400">
+            <p>
+              This changelog is automatically generated by comparing archived versions of the Windsurf rules. 
+              It tracks additions, changes, and enhancements across different versions to help understand 
+              the evolution of Daniel's AI assistant configuration over time.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
