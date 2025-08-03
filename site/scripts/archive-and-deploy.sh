@@ -14,10 +14,12 @@ NC='\033[0m' # No Color
 
 # Get the directory where this script is located
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="$(dirname "$SCRIPT_DIR")"
+SITE_DIR="$(dirname "$SCRIPT_DIR")"
+REPO_ROOT="$(dirname "$SITE_DIR")"
 
 echo -e "${BLUE}🚀 Windsurf Rules Archive and Deploy${NC}"
 echo "Repository: $REPO_ROOT"
+echo "Site directory: $SITE_DIR"
 echo
 
 # Check if we're in the right directory
@@ -66,7 +68,7 @@ echo
 
 # Build the documentation site
 echo -e "${BLUE}🏗️  Building documentation site...${NC}"
-cd "$REPO_ROOT/site"
+cd "$SITE_DIR"
 
 # Install dependencies if node_modules doesn't exist
 if [[ ! -d "node_modules" ]]; then
