@@ -1,3 +1,5 @@
 # Real path to Windsurf global rules (Linux host)
 
-~/codeium/windsurf/memories/global_rules.md
+On Aug 5:
+
+`~/codeium/windsurf/memories/global_rules.md`
