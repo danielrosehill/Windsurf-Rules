@@ -30,7 +30,13 @@ The main rules file should be placed at: `~/.codeium/windsurf/memories/global_ru
 
 | Version | Date | Size | Link |
 |---------|------|------|------|
-| Latest | Latest Version | 7.7 KB | [Latest](latest.md) |
+| 030825 | 03/08/2025 | 7.0 KB | [030825](archived-versions/0825/030825.md) |
+| 050825 | 05/08/2025 | 7.0 KB | [050825](archived-versions/0825/050825.md) |
+| rules_20250810_005318 | rules_20250810_005318 | 11.9 KB | [rules_20250810_005318](archived-versions/0825/rules_20250810_005318.md) |
+| rules_20250810_005545 | rules_20250810_005545 | 12.5 KB | [rules_20250810_005545](archived-versions/0825/rules_20250810_005545.md) |
+| 220725 | 22/07/2025 | 4.4 KB | [220725](archived-versions/0725/220725.md) |
+| 280725 | 28/07/2025 | 9.5 KB | [280725](archived-versions/0725/280725.md) |
+| 310725 | 31/07/2025 | 9.9 KB | [310725](archived-versions/0725/310725.md) |
 
 
 <!-- END_VERSIONS_TABLE -->
