@@ -18,7 +18,7 @@ import json
 class RulesConstructor:
     def __init__(self, openrouter_key=None, openai_key=None):
         """Initialize the constructor with API credentials."""
-        self.blocks_dir = Path("latest/blocks")
+        self.blocks_dir = Path("snippets")
         self.output_file = Path("latest.md")
         self.timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         
