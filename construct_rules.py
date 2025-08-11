@@ -18,34 +18,34 @@ import json
 class RulesConstructor:
     def __init__(self, openrouter_key=None, openai_key=None):
         """Initialize the constructor with API credentials."""
-        self.blocks_dir = Path("snippets")
+        self.blocks_dir = Path("latest/blocks")
         self.output_file = Path("latest.md")
         self.timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         
-        # Try to get API keys from environment or 1Password
-        if openrouter_key:
+        # Try to get API keys from environment or 1Password - prioritize OpenAI
+        if openai_key:
+            self.client = OpenAI(api_key=openai_key)
+            self.model = "gpt-5-mini-2025-08-07"
+        elif openrouter_key:
             self.client = OpenAI(
                 base_url="https://openrouter.ai/api/v1",
                 api_key=openrouter_key
             )
             self.model = "anthropic/claude-3.5-sonnet-20241022"
-        elif openai_key:
-            self.client = OpenAI(api_key=openai_key)
-            self.model = "gpt-4o"
         else:
-            # Try to get from environment
-            openrouter_key = os.getenv('OPENROUTER_API_KEY')
+            # Try to get from environment - prioritize OpenAI
             openai_key = os.getenv('OPENAI_API_KEY')
+            openrouter_key = os.getenv('OPENROUTER_API_KEY')
             
-            if openrouter_key:
+            if openai_key:
+                self.client = OpenAI(api_key=openai_key)
+                self.model = "gpt-5-mini-2025-08-07"
+            elif openrouter_key:
                 self.client = OpenAI(
                     base_url="https://openrouter.ai/api/v1",
                     api_key=openrouter_key
                 )
                 self.model = "anthropic/claude-3.5-sonnet-20241022"
-            elif openai_key:
-                self.client = OpenAI(api_key=openai_key)
-                self.model = "gpt-4o"
             else:
                 raise ValueError("No API key found. Set OPENROUTER_API_KEY or OPENAI_API_KEY environment variable, or pass as argument.")
 
@@ -144,14 +144,26 @@ Return a JSON response with this structure:
 """
 
         try:
-            response = self.client.chat.completions.create(
-                model=self.model,
-                messages=[
-                    {"role": "system", "content": "You are an expert at organizing system prompts for maximum effectiveness. Always respond with valid JSON."},
-                    {"role": "user", "content": organization_prompt}
-                ],
-                temperature=0.3
-            )
+            # Use different parameters based on model
+            if "gpt-5-mini" in self.model:
+                # GPT-5-mini only supports default temperature
+                response = self.client.chat.completions.create(
+                    model=self.model,
+                    messages=[
+                        {"role": "system", "content": "You are an expert at organizing system prompts for maximum effectiveness. Always respond with valid JSON."},
+                        {"role": "user", "content": organization_prompt}
+                    ]
+                )
+            else:
+                # Other models support custom temperature
+                response = self.client.chat.completions.create(
+                    model=self.model,
+                    messages=[
+                        {"role": "system", "content": "You are an expert at organizing system prompts for maximum effectiveness. Always respond with valid JSON."},
+                        {"role": "user", "content": organization_prompt}
+                    ],
+                    temperature=0.3
+                )
             
             organization = json.loads(response.choices[0].message.content)
             return organization
