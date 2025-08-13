@@ -83,6 +83,11 @@ Use the following IP references unless Daniel indicates he is off the home LAN, 
 ### Default Assumption
 Unless otherwise instructed, assume Daniel will be placing deployed services and tools behind Cloudflare authentication.
 
+## Development Environment
+
+SDKs are available here: /home/daniel/development/sdks
+
+
 ### Setup Method
 
 #### 1. Cloudflare Container
